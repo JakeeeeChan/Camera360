@@ -8,11 +8,13 @@ import java.nio.file.Path;
 
 public class CompileImage {
 
-    public CompileImage(String folderPath, String path) throws IOException {
-        new SliceImage(folderPath, path);
+    public CompileImage(String path) throws IOException {
+        String folderPath = path + "/photos/";
+
+        new SliceImage(path);
 
         ImageProperties imgp = new ImageProperties(folderPath);
-        SliceImage simg = new SliceImage(folderPath, path);
+        SliceImage simg = new SliceImage(path);
         File [] files = imgp.files;
         int height = imgp.height;
         int width = simg.sliceWidth * files.length;
@@ -22,7 +24,7 @@ public class CompileImage {
         //testing
         for (int i = 0; i < files.length; i++) {
             if (files[i].isFile()) {
-                File f = new File(path + "\\slicedImages\\" + Integer.toString(i) + ".png");
+                File f = new File(path + "/slicedImages/" + Integer.toString(i) + ".png");
                 BufferedImage bimg = ImageIO.read(f);
 
                 Graphics g = combined.getGraphics();
@@ -30,11 +32,11 @@ public class CompileImage {
 
                 g.dispose();
 
-                if (Files.exists(Path.of(path + "\\export\\"))) {
-                    ImageIO.write(combined, "png", new File(path + "\\export\\EXPORT.png"));
+                if (Files.exists(Path.of(path + "/export/"))) {
+                    ImageIO.write(combined, "png", new File(path + "/export/EXPORT.png"));
                 } else {
-                    new File(path + "\\export\\").mkdirs();
-                    ImageIO.write(combined, "png", new File(path + "\\export\\EXPORT.png"));
+                    new File(path + "/export/").mkdirs();
+                    ImageIO.write(combined, "png", new File(path + "/export/EXPORT.png"));
                 }
             }
         }

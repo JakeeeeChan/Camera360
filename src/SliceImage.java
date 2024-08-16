@@ -9,7 +9,9 @@ public class SliceImage {
 
     public int sliceWidth;
 
-    public SliceImage(String folderPath, String path) throws IOException {
+    public SliceImage(String path) throws IOException {
+        String folderPath = path + "/photos/";
+
         ImageProperties imgp = new ImageProperties(folderPath);
         File [] files = imgp.files;
         int height = imgp.height;
@@ -26,16 +28,16 @@ public class SliceImage {
                 BufferedImage slicedImage = bimg.getSubimage(posX, posY, sliceWidth, height);
 
                 //check if dir is already created for sliced images
-                if (Files.exists(Path.of(path + "\\slicedImages\\"))) {
-                    File slicedPath = new File(path + "\\slicedImages\\");
+                if (Files.exists(Path.of(path + "/slicedImages/"))) {
+                    File slicedPath = new File(path + "/slicedImages/");
 
-                    File outputFile = new File(path + "\\slicedImages\\" + Integer.toString(i) + ".png");
+                    File outputFile = new File(path + "/slicedImages/" + Integer.toString(i) + ".png");
 
                     ImageIO.write(slicedImage, "png", outputFile);
                 } else {
-                    new File(path + "\\slicedImages\\").mkdirs();
+                    new File(path + "/slicedImages/").mkdirs();
 
-                    File outputFile = new File(path + "\\slicedImages\\" + Integer.toString(i) + ".png");
+                    File outputFile = new File(path + "/slicedImages/" + Integer.toString(i) + ".png");
 
                     ImageIO.write(slicedImage, "png", outputFile);
                 }
